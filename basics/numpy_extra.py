@@ -88,7 +88,15 @@ def broadcast_adv():
     distance = np.sqrt(x**2 + y**2)
     print(distance)
 
-
+def lexi_sort():
+    surnames =    ('Hertz',    'Galilei', 'Hertz')
+    first_names = ('Heinrich', 'Galileo', 'Gustav')
+    ind = np.lexsort((first_names, surnames))
+    """
+    First it will sort surnames - Resulting is Galilei, Hertz, Hertz then fnames is used to resolve the Hertz,Hertz
+    As, Gustav < Heinrich, the order would be 1 - Galilei 2 Hertz-Gustav 0 Hertz-Heinrich
+    """
+    return ind #This will b array([1, 2, 0]) 
 # prime_getter(100)
 # fancy_indexing()
 # ele_comparison()
