@@ -1,0 +1,20 @@
+def answer_six():
+    max_three = census_df.groupby("STNAME", as_index=False).count() #
+    max_three_name = max_three.nlargest(3,"CENSUS2010POP")
+    print(max_three_name['STNAME'])
+    return "YOUR ANSWER HERE"
+answer_six()
+
+
+I cross verified it with 
+texas = census_df[census_df['STNAME']=='Texas'].sort("CENSUS2010POP", ascending=False)["CENSUS2010POP"].nlargest(3)
+//where STNAME=='Texas', sort it out based on CENSUS2010POP in descending order, Get CENSUS2010POP and get the 3 largest values out of it.
+Texas 255
+Georgia 160
+Virginia 134
+
+texas = census_df.groupby('STNAME')['CENSUS2010POP'].nlargest(3).sum(level=0).nlargest(3)
+groupby.nlargest(2) returns a Series with MultiIndex. You need to sum on level=0. Then, you can call nlargest(2) again (this time for the 2 id's with largest sums):
+
+73818
+687
