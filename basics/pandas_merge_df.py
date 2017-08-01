@@ -64,7 +64,7 @@ n = np.random.randint(10,30,12).reshape(4,3)
 df1 = pd.DataFrame(data=n, columns=["a","b","c"])
 
 df1["max"] = df1.apply(max, axis=1) #Simple max min can be done like this
-df1["avg"] = df1.apply(min, axis=1)
+df1["min"] = df1.apply(min, axis=1)
 df1["mean"] = df1.mean(axis=1)
 df1["diff"] = df1.apply(diff, axis=1) #Using user defined function here
 df1["sum"] = df1.apply(lambda x: sum(x[["a","b","c"]]), axis=1) #Using lambda here itself
