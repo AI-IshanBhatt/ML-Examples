@@ -102,4 +102,7 @@ print(df.groupby('Category').apply(lambda df,a,b: sum(df[a] * df[b]), 'Weight (o
 
 One argument is implicit the df object itself. 2nd and 3rd are coumn names.
 A new way of dealing YAY..
+
+Doing projection on grouped by data. Selecting a and b columns
+df.groupby("gb")["a","b"].agg({'max':np.max})
 """
