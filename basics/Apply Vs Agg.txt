@@ -1,0 +1,50 @@
+Apply Vs Agg (Pandas)
+
+Apply-
+>>> df
+    a   b   c  gb
+0  21  27  26   1
+1  17  20  16   1
+2  13  17  24   2
+3  21  26  16   2
+
+>>> df.columns = ["male","female","child","gb"]
+>>> df
+   male  female  child  gb
+0    21      27     26   1
+1    17      20     16   1
+2    13      17     24   2
+3    21      26     16   2
+
+Requirement = We need to find the sum of male and female in each group of gb (4 for gb=1, 4 for gb=2), So final answer should be 2x2
+
+>>> df.groupby("gb").apply(lambda df,a,b: sum(df[a] + df[b]), 'male','female')
+gb
+1    85
+2    77
+
+Agg-
+
+>>> stacked = df.set_index("gb").stack().reset_index() #Stack it up by gb so, we will have 6(3x2) rows for gb=1 6(3x2) rows for gb=2
+>>> stacked
+    gb level_1   0
+0    1    male  21
+1    1  female  27
+2    1   child  26
+3    1    male  17
+4    1  female  20
+5    1   child  16
+6    2    male  13
+7    2  female  17
+8    2   child  24
+9    2    male  21
+10   2  female  26
+11   2   child  16
+
+>>> stacked[stacked["level_1"] != 'child'].groupby("gb").agg({0:["sum"]}) #We simply filter out child and then groupby with gb and apply agg on 0 for summation. You can do {0:["sum","prod","count"]}
+     0
+   sum
+gb    
+1   85
+2   77
+
