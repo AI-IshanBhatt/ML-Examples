@@ -105,4 +105,7 @@ A new way of dealing YAY..
 
 Doing projection on grouped by data. Selecting a and b columns
 df.groupby("gb")["a","b"].agg({'max':np.max})
+
+BEWARE,
+If you do df.groupby("gb")["a","b"].agg({'a':np.max}), the original column would be replaced.
 """
