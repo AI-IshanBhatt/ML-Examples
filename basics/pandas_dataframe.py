@@ -79,7 +79,9 @@ only_golds = country_df[country_df["Golds"] > 100] #Very concise,also AND OR ope
 print(only_golds["Golds"])
 """
 When using index operator as where, try to keep it as last one if you are chaining
-df['Name'][df['Cost'] > 10] and as you must have noticed,
+df['Name'][df['Cost'] > 10] and as you must have noticed, WHERE
+df[df["cost"] > 10]["Name"] or df["Name"][df["cost"] > 10], both works as 
+SELECT NAME FROM DF WHERE COST > 10;
 """
 print(country_df[(country_df["Golds"] > 100) | (country_df["Bronzes"] > 400)]) #Each boolean mask needs to be in () because of ordering of operators
 
