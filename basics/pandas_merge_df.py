@@ -109,3 +109,40 @@ df.groupby("gb")["a","b"].agg({'max':np.max})
 BEWARE,
 If you do df.groupby("gb")["a","b"].agg({'a':np.max}), the original column would be replaced.
 """
+
+print("--------SOME EXPERIMENT WITH CUT----------------")
+raw_data = {'regiment': ['Nighthawks', 'Nighthawks', 'Nighthawks', 'Nighthawks', 'Dragoons', 'Dragoons', 'Dragoons', 'Dragoons', 'Scouts', 'Scouts', 'Scouts', 'Scouts'],
+        'company': ['1st', '1st', '2nd', '2nd', '1st', '1st', '2nd', '2nd','1st', '1st', '2nd', '2nd'],
+        'name': ['Miller', 'Jacobson', 'Ali', 'Milner', 'Cooze', 'Jacon', 'Ryaner', 'Sone', 'Sloan', 'Piger', 'Riani', 'Ali'],
+        'preTestScore': [4, 24, 31, 2, 3, 4, 24, 31, 2, 3, 2, 3],
+        'postTestScore': [25, 94, 57, 62, 70, 25, 94, 57, 62, 70, 62, 70]}
+df5 = pd.DataFrame(raw_data, columns = ['regiment', 'company', 'name', 'preTestScore', 'postTestScore'])
+print(df5.head())
+
+bins = [0, 25, 50, 75, 100] #Bins 0 to 25, 25 to 50 etc
+group_names = ['Low', 'Okay', 'Good', 'Great']
+
+categories = pd.cut(df5['postTestScore'], bins=bins , labels=group_names)
+df5['Categories'] = pd.cut(df5['postTestScore'], bins=bins , labels=group_names)
+print(df5)
+"""
+We created range (bins), the number of the ranges should be equal to lenght of group_names
+then we categorise based on postTestScore and name the range as group_names.
+"""
+
+count = pd.value_counts(categories)
+print("-------- With bins range-----------") #Specifies how many fit into the range(labels)
+print(count)
+
+print("----------------PIVOT TABLE--------------------")
+pivot_df = pd.pivot_table(df5, index=['regiment', 'company'], aggfunc='mean') #Making these two as index and get mean over pre/postTestScore
+print(pivot_df)
+pivot_df1 = pd.pivot_table(df5, values='preTestScore', index='regiment', columns='company', aggfunc=[np.mean, len], fill_value=0)
+"""
+Above we specify which columns we need the aggfunc to be applied on by calling values=
+columns= would provide different column names to data frame here, 1st 2nd Basically which company they belong to
+index= the index on which the stuff needs to be done.
+aggfunc is self explainatory
+fill_value if Nan is fucking you
+"""
+print(pivot_df1)
