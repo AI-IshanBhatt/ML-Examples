@@ -1,5 +1,7 @@
+
 import pandas as pd
 import numpy as np
+
 
 def cleanup(row):
     """
@@ -69,3 +71,31 @@ nan_dict = {"..." : np.nan}
 df4["Energy Supply"].replace(nan_dict, inplace=True)
 df4["Energy Supply per Capita"].replace(nan_dict, inplace=True)
 print(df4.head())
+
+print("-------------------CLEANING THE GDP DATA-------------------------------")
+df6 = pd.read_excel(r'C:\Users\SONY\Downloads\API_NY.GDP.MKTP.CD_DS2_en_excel_v2.xls', sheetname="Data", skiprows=3)
+country_dict = {"Korea, Rep.": "South Korea",
+                "Iran, Islamic Rep.": "Iran",
+                "Hong Kong SAR, China": "Hong Kong"}
+df6["Country Name"].replace(country_dict, inplace=True)
+print(df6.loc[df6['Country Name'].isin(["South Korea","Iran","Hong Kong"])])
+
+print("------------------CLEANING scimagojr DATA----------------------------")
+df7 = pd.read_excel(r'C:\Users\SONY\Downloads\scimagojr.xlsx')
+print(df7.head())
+
+print("-----------------LETS JOIN THE SHIT-----------------------------------")
+#df3, df6 df7
+df6.rename(columns={"Country Name":"Country"}, inplace=True) #Using rename to change column name
+year_columns = list(map(str, [i for i in range(2006,2016)])) #Keepit cool stuff
+df8 = pd.merge(pd.merge(df3, df6, on="Country", how='inner'), df7.loc[df7["Rank"] < 16], how='inner', on='Country')
+#Above is triple merge, and we are picking only those from df7 whose rank is less than 16 in the merging.
+#Could have used df1.merge(df2[list('xab')]) if we wanted to use only x,ab columns of df2 in the merging
+#Thought of using it that's why created year_column
+my_coulumns = ['Country','Rank', 'Documents', 'Citable documents', 'Citations', 'Self-citations', 'Citations per document',\
+               'H index', 'Energy Supply', 'Energy Supply per Capita', '% Renewable', '2006', '2007', '2008',\
+               '2009', '2010', '2011', '2012', '2013', '2014', '2015']
+df8 = df8[my_coulumns]
+df8.set_index('Country', inplace=True) #Setting the index, as simple as that
+print(df8.head())
+print(df8.index)
