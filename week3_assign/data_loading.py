@@ -56,7 +56,7 @@ print(df.loc[df['Country'].isin(['South Korea', 'United States', 'United Kingdom
 print()
 print()
 print("-------------APPLY TO CLEAN DATA---------------")
-df3 = df.apply(cleanup, axis=1)
+df3 = df.apply(cleanup, axis=1) #cleanup will receive the dataframe row by row, remember crc
 print(df3.head())
 print()
 print()
@@ -98,4 +98,35 @@ my_coulumns = ['Country','Rank', 'Documents', 'Citable documents', 'Citations', 
 df8 = df8[my_coulumns]
 df8.set_index('Country', inplace=True) #Setting the index, as simple as that
 print(df8.head())
+print(df8.shape)
 print(df8.index)
+
+print("--------------------AFTER ANSWER TWO---------------------------------")
+
+df8["Population"] = df8["Energy Supply"] / df8["Energy Supply per Capita"]
+ContinentDict  = {'China':'Asia',
+                  'United States':'North America',
+                  'Japan':'Asia',
+                  'United Kingdom':'Europe',
+                  'Russian Federation':'Europe',
+                  'Canada':'North America',
+                  'Germany':'Europe',
+                  'India':'Asia',
+                  'France':'Europe',
+                  'South Korea':'Asia',
+                  'Italy':'Europe',
+                  'Spain':'Europe',
+                  'Iran':'Asia',
+                  'Australia':'Australia',
+                  'Brazil':'South America'}
+
+#Below line worked as Country was the index, so names were grouped correctly
+gr = df8.groupby(ContinentDict)["Population"].agg({'size':"size",'sum':np.sum,\
+    'mean':np.mean,'std':np.std})
+print(gr.index)
+
+print("-----------------------TRY ANSWER TWO AGAIN--------------------")
+df9 = pd.merge(pd.merge(df3, df6, on="Country", how='outer'), df7, how='outer', on='Country')
+df10 = pd.merge(pd.merge(df3, df6, on="Country", how='inner'), df7, how='inner', on='Country')
+
+print(len(df9) - len(df10))
