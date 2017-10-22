@@ -49,3 +49,17 @@ You'll get array with n elements representing sum in each distribution.
 rand_int_11 = (np.random.binomial(20,0.5,1000) > 11).sum()
 print(rand_int_11)
 
+print("BACK TO BACK TORNEDOES")
+chance_of_tornado = 0.01 #On a day
+tornedo_events = np.random.binomial(1, chance_of_tornado, 1000000) #We are running it over 10000 days
+#Keepin mind you can't out first argument as 10000.
+#It would endup giving you sum of nuber of days when it happened.
+#You keep 1 day as first argument and that's repeated over 10000 times
+#Should have been easier than previous one. whatever
+two_days_in_a_row = 0
+
+for i in range(1,len(tornedo_events) -1):
+    if tornedo_events[i]==1 and tornedo_events[i-1]==1:
+        two_days_in_a_row += 1
+
+print("Occurance of two back to back are {} in {} years".format(two_days_in_a_row, 1000000/365))
