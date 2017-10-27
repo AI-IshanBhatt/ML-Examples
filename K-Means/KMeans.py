@@ -1,6 +1,13 @@
 import numpy as np
 from pprint import pprint
 
+"""
+About doing multiprocessing-
+1) Re location of centroids can be done using multip processing (1 process per cluster)
+2) Divide points by CPU counts and 1 process for one set of points to set previous and current centroids.
+"""
+
+
 def get_minimum_euclidian(centroids, point):
     point = np.array(point.to_array())
     min_id = 0
