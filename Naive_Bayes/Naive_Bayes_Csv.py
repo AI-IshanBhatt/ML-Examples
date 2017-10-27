@@ -70,4 +70,4 @@ def shall_we_play(*l):
         print("YAY PLAY")
 
 pprint(get_priors_likelihood())
-shall_we_play(3,3,4,4)
+shall_we_play(3,3,2,1)
