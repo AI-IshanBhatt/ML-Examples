@@ -14,7 +14,11 @@ def get_mean_centroid(points, i):
     y_axis = round(np.mean([point.y for point in points]))
     pprint("THE NEW CENTROID {} {} for centroid {}".format(x_axis, y_axis, i))
     return Centroid(x_axis,y_axis,[])
-
+"""
+About doing multiprocessing-
+1) Re location of centroids can be done using multip processing (1 process per cluster)
+2) Divide points by CPU counts and 1 process for one set of points to set previous and current centroids.
+"""
 
 def get_minimum_euclidian(centroids, point):
     # pprint(centroids) This one is as expected
